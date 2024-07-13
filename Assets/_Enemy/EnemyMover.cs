@@ -15,8 +15,7 @@ public class EnemyMover : MonoBehaviour
     {
         foreach(Waypoint waypoint in path) // Looping elements within that list
         {
-            // transform.position is nothing but the position of the Enemy.
-            transform.position =  waypoint.transform.position;
+            transform.position =  waypoint.transform.position; 
             yield return new WaitForSeconds(waitTime);
         }
     }
