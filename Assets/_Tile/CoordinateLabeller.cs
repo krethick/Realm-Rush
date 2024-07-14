@@ -6,11 +6,16 @@ using TMPro;
 [ExecuteAlways] 
 public class CoordinateLabeller : MonoBehaviour
 {
+    [SerializeField] Color defaultColor = Color.black; // Color of the deafult tile
+    [SerializeField] Color blockedColor = Color.red; // Color for the blocked tile.
     TextMeshPro label;
     Vector2Int coordinates = new Vector2Int(); // Initialise the coordinates
+    Waypoint waypoint;
     void Awake() // It is called even before start
     {
         label = GetComponent<TextMeshPro>(); // Getting the Text mesh pro component from the child object (Text)
+        label.enabled = false;
+        waypoint = GetComponentInParent<Waypoint>();
         DisplayCoordinates(); // This will show in the output as well/in game scene
     }
     void Update()
@@ -20,6 +25,29 @@ public class CoordinateLabeller : MonoBehaviour
           DisplayCoordinates();
           UpdateObjectName();
         }
+
+        ColorCoorinates();
+        ToggleLabels();
+    }
+
+    void ToggleLabels() // Toggle between the labels
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            label.enabled = !label.IsActive();
+        }
+    }
+
+    void ColorCoorinates() // Change the color coordinates of the label/label numbers present in the tile
+    {
+       if(waypoint.IsPlaceable)
+       {
+         label.color = defaultColor;
+       }
+      else
+      {
+        label.color = blockedColor;
+      }
     }
 
     void DisplayCoordinates()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class EnemyMover : MonoBehaviour
 {
@@ -11,9 +12,28 @@ public class EnemyMover : MonoBehaviour
     
     void Start()
     {
+        FindPath();
+        ReturnToStart();
         StartCoroutine(FollowPath());
     }
     
+    void FindPath()
+    {
+
+        path.Clear(); // Clear the path more like system.cls
+        GameObject parent = GameObject.FindGameObjectWithTag("Path");
+
+        foreach(Transform child in parent.transform)
+        {
+            // Adding the waypoints as we get contents from the WayPoint script
+            path.Add(child.GetComponent<Waypoint>()); // We are inserting into the list
+        }
+    }
+
+    void ReturnToStart() // Move our enemy to the first waypoint
+    {
+          transform.position = path[0].transform.position;
+    }
     IEnumerator FollowPath()
     {
         foreach(Waypoint waypoint in path) // Looping elements within that list
@@ -41,5 +61,7 @@ public class EnemyMover : MonoBehaviour
             yield return new WaitForEndOfFrame(); // End of the frame is completed
             }          
         }
+
+        Destroy(gameObject);
     }
 }
