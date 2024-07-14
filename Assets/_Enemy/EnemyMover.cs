@@ -31,10 +31,12 @@ public class EnemyMover : MonoBehaviour
             
             transform.position = Vector3.Lerp(startposition, endPosition,travelPercent);
             
+            /*
+              IMPORTANT COMMENTING JUST FOR A MOMENT
             float jumpHeight = Mathf.Sin(travelPercent * Mathf.PI) * 2; // Related to the ossilation concept in Project boost
             Vector3 jumpPosition = new Vector3(transform.position.x, transform.position.y +  jumpHeight,transform.position.z); // change the vector position
             transform.position = jumpPosition;
-         
+           */
 
             yield return new WaitForEndOfFrame(); // End of the frame is completed
             }          
